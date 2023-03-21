@@ -1061,4 +1061,10 @@ extern vpiHandle vpip_module(__vpiScope*scope);
 
 extern int vpip_delay_selection;
 
+/*
+ * The vvp entry opens the output file that receives the
+ * cover lines and time.
+ */
+extern FILE* cover_out;
+
 #endif /* IVL_vpi_priv_H */

@@ -6401,6 +6401,18 @@ bool of_FILE_LINE(vthread_t thr, vvp_code_t cp)
       if (show_file_line)
 	    cerr << thr->get_fileline()
 	         << vpi_get_str(_vpiDescription, handle) << endl;
+      
+      if (cover_out != 0) {
+            s_vpi_time now;
+            now.type = vpiSimTime;
+            vpi_get_time(0, &now);
+            uint64_t raw_time;
+            raw_time = now.high;
+            raw_time <<= 32;
+            raw_time |= now.low;
+            fprintf(cover_out, "%s%ld\n", thr->get_fileline().c_str(), raw_time);
+      }
+
 
       return true;
 }

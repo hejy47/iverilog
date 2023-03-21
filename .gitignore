@@ -114,3 +114,5 @@ dep
 
 # Check output
 /check.vvp
+
+/.vscode

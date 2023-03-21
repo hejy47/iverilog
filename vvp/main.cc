@@ -254,6 +254,8 @@ const char*module_tab[64];
 extern void vpip_mcd_init(FILE *log);
 extern void vvp_vpi_init(void);
 
+FILE*cover_out = 0;
+
 int main(int argc, char*argv[])
 {
       int opt;
@@ -282,7 +284,7 @@ int main(int argc, char*argv[])
         /* For non-interactive runs we do not want to run the interactive
          * debugger, so make $stop just execute a $finish. */
       stop_is_finish = false;
-      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvV")) != EOF) switch (opt) {
+      while ((opt = getopt(argc, argv, "+hilc:M:m:nNsvV")) != EOF) switch (opt) {
          case 'h':
            fprintf(stderr,
                    "Usage: vvp [options] input-file [+plusargs...]\n"
@@ -290,6 +292,7 @@ int main(int argc, char*argv[])
                    " -h             Print this help message.\n"
                    " -i             Interactive mode (unbuffered stdio).\n"
                    " -l file        Logfile, '-' for <stderr>\n"
+                   " -c file        The path of Coverfile\n"
                    " -M path        VPI module directory\n"
 		   " -M -           Clear VPI module path\n"
                    " -m module      Load vpi module.\n"
@@ -304,6 +307,9 @@ int main(int argc, char*argv[])
 	    break;
 	  case 'l':
 	    logfile_name = optarg;
+	    break;
+	  case 'c':
+	    cover_out = fopen(optarg, "w");
 	    break;
 	  case 'M':
 	    if (strcmp(optarg,"-") == 0) {
@@ -494,6 +500,9 @@ int main(int argc, char*argv[])
       }
 
       final_cleanup();
+	  if (cover_out != 0) {
+		fclose(cover_out);
+	  }
 
       return vvp_return_value;
 }
