@@ -131,4 +131,10 @@ extern const vvp_vector4_t& vthread_get_vec4_stack(struct vthread_s*thr, unsigne
 /* This is used to actually delete a thread once we are done with it. */
 extern void vthread_delete(vthread_t thr);
 
+/*
+* The vvp entry opens the output file that receives the
+* cover lines and time.
+*/
+extern FILE* cover_out;
+
 #endif /* IVL_vthread_H */
